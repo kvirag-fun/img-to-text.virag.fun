@@ -1,193 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0", viewport-fit=cover">
-    <title>Image to ASCII Converter</title>
-
-    <!-- Framed Picture Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖼️</text></svg>">
-
-    <!-- 1. Reusable Theme Palette -->
-    <link rel="stylesheet" href="theme.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0", viewport-fit=cover">
+        <title>Image to ASCII Converter</title>
     
-    <!-- 2. Reusable Framework -->
-    <link rel="stylesheet" href="framework.css">
-
-    <!-- 3. Reusable Footer -->
-    <script src="framework.js"></script>
+        <!-- Framed Picture Favicon -->
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖼️</text></svg>">
     
-    <style>
-        body {
-            text-align: center;
-            padding: 2rem;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .controls {
-            margin: 20px 0;
-            padding: 20px;
-            background: #2a2a2a;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        button, input[type="file"]::file-selector-button {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-        button:disabled {
-            background: #555;
-            cursor: not-allowed;
-        }
-        /* Blue accent color for copy button */
-        #copyBtn {
-            background: #008CBA;
-        }
-        #copyBtn:disabled {
-            background: #555;
-        }
-        /* The preview needs a monospace font so the characters line up perfectly */
-        #preview {
-            font-family: monospace;
-            font-size: 8px;
-            line-height: 8px;
-            white-space: pre;
-            background: #000000;
-            color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            text-align: left;
-            display: inline-block;
-            max-width: 100%;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Image to ASCII Generator</h1>
-
-        <div class="controls">
-            <input type="file" id="imageInput" accept="image/*">
-            <button id="copyBtn" disabled>📋 Copy Text</button>
-            <button id="downloadBtn" disabled>💾 Download .txt</button>
-        </div>
-
-        <pre id="preview">Upload an image to see the ASCII preview here...</pre>
-    </div>
-    
-    <script>
-        const imageInput = document.getElementById('imageInput');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const copyBtn = document.getElementById('copyBtn');
-        const preview = document.getElementById('preview');
+        <!-- 1. Reusable Theme Palette -->
+        <link rel="stylesheet" href="theme.css">
         
-        let currentAsciiText = '';
-
-        // This string goes from darkest characters to lightest characters
-        const asciiChars = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ";
-
-        imageInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
+        <!-- 2. Reusable Framework -->
+        <link rel="stylesheet" href="framework.css">
+    
+        <!-- 3. Reusable Footer -->
+        <script src="framework.js"></script>
+        
+        <style>
+            body {
+                text-align: center;
+                padding: 2rem;
+            }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            .controls {
+                margin: 20px 0;
+                padding: 20px;
+                background: #2a2a2a;
+                border-radius: 8px;
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+            button, input[type="file"]::file-selector-button {
+                background: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: background 0.2s;
+            }
+            button:disabled {
+                background: #555;
+                cursor: not-allowed;
+            }
+            /* Blue accent color for copy button */
+            #copyBtn {
+                background: #008CBA;
+            }
+            #copyBtn:disabled {
+                background: #555;
+            }
+            /* The preview needs a monospace font so the characters line up perfectly */
+            #preview {
+                font-family: monospace;
+                font-size: 8px;
+                line-height: 8px;
+                white-space: pre;
+                background: #000000;
+                color: #ffffff;
+                padding: 20px;
+                border-radius: 8px;
+                overflow-x: auto;
+                text-align: left;
+                display: inline-block;
+                max-width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Image to ASCII Generator</h1>
+    
+            <div class="controls">
+                <input type="file" id="imageInput" accept="image/*">
+                <button id="copyBtn" disabled>📋 Copy Text</button>
+                <button id="downloadBtn" disabled>💾 Download .txt</button>
+            </div>
+    
+            <pre id="preview">Upload an image to see the ASCII preview here...</pre>
+        </div>
+        
+        <script>
+            const imageInput = document.getElementById('imageInput');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const preview = document.getElementById('preview');
             
-            reader.onload = function(event) {
-                const img = new Image();
-                img.onload = function() {
-                    // Create an invisible canvas to read the image pixels
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-
-                    // Set the output width (number of text characters per line)
-                    const width = 120;
-                    
-                    // Calculate height. We multiply by 0.5 because text characters 
-                    // are roughly twice as tall as they are wide.
-                    const height = Math.floor((img.height / img.width) * width * 0.5);
-
-                    canvas.width = width;
-                    canvas.height = height;
-                    
-                    // Draw the resized image onto the canvas
-                    ctx.drawImage(img, 0, 0, width, height);
-
-                    // Extract the raw pixel data (Red, Green, Blue, Alpha)
-                    const imageData = ctx.getImageData(0, 0, width, height);
-                    const pixels = imageData.data;
-
-                    currentAsciiText = '';
-
-                    // Loop through every pixel
-                    for (let i = 0; i < pixels.length; i += 4) {
-                        const r = pixels[i];
-                        const g = pixels[i + 1];
-                        const b = pixels[i + 2];
+            let currentAsciiText = '';
+    
+            // This string goes from darkest characters to lightest characters
+            const asciiChars = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ";
+    
+            imageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+    
+                const reader = new FileReader();
+                
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        // Create an invisible canvas to read the image pixels
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+    
+                        // Set the output width (number of text characters per line)
+                        const width = 120;
                         
-                        // Calculate human-perceived brightness (luminance)
-                        const brightness = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+                        // Calculate height. We multiply by 0.5 because text characters 
+                        // are roughly twice as tall as they are wide.
+                        const height = Math.floor((img.height / img.width) * width * 0.5);
+    
+                        canvas.width = width;
+                        canvas.height = height;
                         
-                        // Map the brightness (0-255) to an index in our asciiChars string
-                        const charIndex = Math.floor((brightness / 255) * (asciiChars.length - 1));
-                        
-                        currentAsciiText += asciiChars[charIndex];
-
-                        // Add a line break at the end of every row
-                        if ((i / 4 + 1) % width === 0) {
-                            currentAsciiText += '\n';
+                        // Draw the resized image onto the canvas
+                        ctx.drawImage(img, 0, 0, width, height);
+    
+                        // Extract the raw pixel data (Red, Green, Blue, Alpha)
+                        const imageData = ctx.getImageData(0, 0, width, height);
+                        const pixels = imageData.data;
+    
+                        currentAsciiText = '';
+    
+                        // Loop through every pixel
+                        for (let i = 0; i < pixels.length; i += 4) {
+                            const r = pixels[i];
+                            const g = pixels[i + 1];
+                            const b = pixels[i + 2];
+                            
+                            // Calculate human-perceived brightness (luminance)
+                            const brightness = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+                            
+                            // Map the brightness (0-255) to an index in our asciiChars string
+                            const charIndex = Math.floor((brightness / 255) * (asciiChars.length - 1));
+                            
+                            currentAsciiText += asciiChars[charIndex];
+    
+                            // Add a line break at the end of every row
+                            if ((i / 4 + 1) % width === 0) {
+                                currentAsciiText += '\n';
+                            }
                         }
-                    }
-
-                    // Display the result and enable action buttons
-                    preview.textContent = currentAsciiText;
-                    downloadBtn.disabled = false;
-                    copyBtn.disabled = false;
-                    copyBtn.textContent = '📋 Copy Text';
+    
+                        // Display the result and enable action buttons
+                        preview.textContent = currentAsciiText;
+                        downloadBtn.disabled = false;
+                        copyBtn.disabled = false;
+                        copyBtn.textContent = '📋 Copy Text';
+                    };
+                    img.src = event.target.result;
                 };
-                img.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-
-        // Handle the TXT file download
-        downloadBtn.addEventListener('click', () => {
-            if (!currentAsciiText) return;
-            
-            const blob = new Blob([currentAsciiText], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'ascii-art.txt';
-            document.body.appendChild(a);
-            a.click();
-            
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        });
-
-        // Handle copying to clipboard
-        copyBtn.addEventListener('click', () => {
-            if (!currentAsciiText) return;
-            
-            navigator.clipboard.writeText(currentAsciiText).then(() => {
-                copyBtn.textContent = '✅ Copied!';
-                setTimeout(() => { copyBtn.textContent = '📋 Copy Text'; }, 2000);
+                reader.readAsDataURL(file);
             });
-        });
-    </script>
-</body>
+    
+            // Handle the TXT file download
+            downloadBtn.addEventListener('click', () => {
+                if (!currentAsciiText) return;
+                
+                const blob = new Blob([currentAsciiText], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'ascii-art.txt';
+                document.body.appendChild(a);
+                a.click();
+                
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+    
+            // Handle copying to clipboard
+            copyBtn.addEventListener('click', () => {
+                if (!currentAsciiText) return;
+                
+                navigator.clipboard.writeText(currentAsciiText).then(() => {
+                    copyBtn.textContent = '✅ Copied!';
+                    setTimeout(() => { copyBtn.textContent = '📋 Copy Text'; }, 2000);
+                });
+            });
+        </script>
+    </body>
 </html>
