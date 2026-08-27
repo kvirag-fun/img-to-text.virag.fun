@@ -1,5 +1,10 @@
 /* framework.css - Reusable CAD Blueprint Framework */
 
+/* Enable edge-to-edge drawing on mobile browsers */
+:root {
+    color-scheme: dark;
+}
+
 /* Prevent horizontal scrollbars and normalize sizing across mobile browsers */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -14,9 +19,12 @@ html {
 body {
     font-family: system-ui, -apple-system, sans-serif;
     color: var(--text-primary, #f8fafc);
-    background-color: var(--bg-base, #0b0f17);
     margin: 0;
-    padding-bottom: 80px; /* Leaves space for bottom-right title block */
+    
+    /* Adds dynamic top padding if device has a notch/status bar, otherwise defaults to normal spacing */
+    padding-top: max(16px, env(safe-area-inset-top));
+    padding-bottom: max(80px, env(safe-area-inset-bottom)); /* Leaves space for bottom-right title block */
+    
     min-height: 100vh;
     min-height: 100dvh; /* 100dvh prevents dynamic browser address bars from cutting off the layout */
     position: relative;
