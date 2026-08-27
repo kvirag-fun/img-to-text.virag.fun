@@ -32,7 +32,7 @@ body {
     
     background-color: var(--bg-base, #0b0f17);
     background-image: 
-        radial-gradient(circle at 50% 20%, rgba(var(--accent-color) / 30%), transparent 60%),
+        radial-gradient(circle at 50% 20%, color-mix(in srgb, var(--accent-color, #38bdf8) 30%, transparent), transparent 60%),
         linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
         linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
