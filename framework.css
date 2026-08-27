@@ -19,6 +19,7 @@ body {
     min-height: 100vh;
     min-height: 100dvh; /* 100dvh prevents dynamic browser address bars from cutting off the layout */
     position: relative;
+    background-color: transparent;
 }
     
 /* Full-screen Blueprint CAD Grid Layer */
