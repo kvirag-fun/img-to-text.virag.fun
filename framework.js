@@ -1,5 +1,18 @@
 // framework.js - Auto-injects CAD Title Block signature
 
+// Safari Initial Scroll Runway Trick
+document.addEventListener('DOMContentLoaded', () => {
+    // Only run on iOS devices where this Safari quirk occurs
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    
+    if (isIOS && window.scrollY === 0) {
+        // Instantly force a 1-pixel scroll shift and back to break the top-bar block
+        window.scrollTo(0, 1);
+        window.scrollTo(0, 0);
+    }
+});
+
 // Inject CAD Title Block signature on page load
 document.addEventListener('DOMContentLoaded', () => {
     // Create the footer container
