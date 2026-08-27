@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     footer.innerHTML = `
         <div class="cad-spec">
             <span class="cad-label">DESIGNED BY</span>
-            <span class="cad-value">[YOUR NAME]</span>
+            <span class="cad-value">KRISZTIÁN VIRÁG</span>
         </div>
         <div class="cad-spec">
             <span class="cad-label">ROLE</span>
