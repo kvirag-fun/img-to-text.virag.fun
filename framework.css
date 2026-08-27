@@ -23,7 +23,7 @@ body {
     
     /* Adds dynamic top padding if device has a notch/status bar, otherwise defaults to normal spacing */
     padding-top: max(16px, env(safe-area-inset-top));
-    padding-bottom: max(80px, env(safe-area-inset-bottom)); /* Leaves space for bottom-right title block */
+    padding-bottom: max(80px, env(safe-area-inset-bottom));
     
     min-height: 100vh;
     min-height: 100dvh; /* 100dvh prevents dynamic browser address bars from cutting off the layout */
