@@ -24,7 +24,6 @@ html {
         linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 
     background-size: 100% 100%, 30px 30px, 30px 30px, 10px 10px, 10px 10px;
-    background-attachment: fixed;
 }
 
 body {
