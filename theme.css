@@ -1,7 +1,7 @@
 /* theme.css - Change these variables per project */
 :root {
     /* Main accent color (RGB format) */
-    --accent-color: 56, 189, 248; /* CAD Blueprint Sky Blue */
+    --accent-color: #38BDF8; /* CAD Blueprint Sky Blue */
     
     /* Background base color */
     --bg-base: #0b0f17;           /* Deep Canvas Navy */
