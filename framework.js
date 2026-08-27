@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="cad-spec">
             <span class="cad-label">ROLE</span>
-            <span class="cad-value">STRUCTURAL ENGINEER/ PRODUCT MANAGER</span>
+            <span class="cad-value">STRUCTURAL ENGINEER / PRODUCT MANAGER</span>
         </div>
     `;
 
