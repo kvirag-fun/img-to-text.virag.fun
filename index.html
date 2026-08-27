@@ -29,6 +29,7 @@
             justify-content: center;
             gap: 15px;
             align-items: center;
+            flex-wrap: wrap;
         }
         button, input[type="file"]::file-selector-button {
             background: #4CAF50;
@@ -38,10 +39,18 @@
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
+            transition: background 0.2s;
         }
         button:disabled {
             background: #555;
             cursor: not-allowed;
+        }
+        /* Blue accent color for copy button */
+        #copyBtn {
+            background: #008CBA;
+        }
+        #copyBtn:disabled {
+            background: #555;
         }
         /* The preview needs a monospace font so the characters line up perfectly */
         #preview {
@@ -66,13 +75,8 @@
 
         <div class="controls">
             <input type="file" id="imageInput" accept="image/*">
-            <button id="copyBtn" disabled>📋 Copy Text</button> <!-- ADD THIS -->
+            <button id="copyBtn" disabled>📋 Copy Text</button>
             <button id="downloadBtn" disabled>💾 Download .txt</button>
-        </div>
-        
-        <div class="controls">
-            <input type="file" id="imageInput" accept="image/*">
-            <button id="downloadBtn" disabled>Download .txt File</button>
         </div>
 
         <pre id="preview">Upload an image to see the ASCII preview here...</pre>
@@ -106,8 +110,7 @@
                     const width = 120;
                     
                     // Calculate height. We multiply by 0.5 because text characters 
-                    // are roughly twice as tall as they are wide. Without this, 
-                    // the final ASCII art will look vertically stretched.
+                    // are roughly twice as tall as they are wide.
                     const height = Math.floor((img.height / img.width) * width * 0.5);
 
                     canvas.width = width;
@@ -142,10 +145,11 @@
                         }
                     }
 
-                    // Display the result and enable the download button
+                    // Display the result and enable action buttons
                     preview.textContent = currentAsciiText;
                     downloadBtn.disabled = false;
                     copyBtn.disabled = false;
+                    copyBtn.textContent = '📋 Copy Text';
                 };
                 img.src = event.target.result;
             };
@@ -156,22 +160,20 @@
         downloadBtn.addEventListener('click', () => {
             if (!currentAsciiText) return;
             
-            // Create a Blob (a file-like object of immutable, raw data)
             const blob = new Blob([currentAsciiText], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             
-            // Create a temporary, invisible link to trigger the download
             const a = document.createElement('a');
             a.href = url;
             a.download = 'ascii-art.txt';
             document.body.appendChild(a);
             a.click();
             
-            // Clean up
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         });
 
+        // Handle copying to clipboard
         copyBtn.addEventListener('click', () => {
             if (!currentAsciiText) return;
             
@@ -180,7 +182,6 @@
                 setTimeout(() => { copyBtn.textContent = '📋 Copy Text'; }, 2000);
             });
         });
-        
     </script>
 </body>
 </html>
