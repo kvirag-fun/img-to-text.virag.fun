@@ -12,8 +12,9 @@
 
 html {
     overflow-x: hidden;
-    background-color: var(--bg-base, #0b0f17);
-    min-height: 100%;
+    background: transparent;
+    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 /* Full-Bleed CAD Grid Layer - Fixed to absolute window coordinates */
@@ -26,6 +27,7 @@ html::before {
     bottom: 0;
     z-index: -1;
     pointer-events: none;
+    background-color: var(--bg-base, #0b0f17);
 
     background-image: 
         radial-gradient(circle at 50% 20%, color-mix(in srgb, var(--accent-color, #00bfff) 30%, transparent), transparent 60%),
@@ -50,7 +52,7 @@ body {
 }
 
 /* Page Content Wrapper - Safe-area spacing applied INSIDE the page */
-.container, main, .page-content {
+main {
     padding-top: max(16px, env(safe-area-inset-top));
     padding-bottom: max(80px, env(safe-area-inset-bottom));
 }
