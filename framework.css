@@ -1,4 +1,4 @@
-/* framework.css - Reusable CAD Grid Framework */
+/* framework.css - Reusable CAD Blueprint Framework */
 
 body {
     font-family: system-ui, -apple-system, sans-serif;
@@ -6,6 +6,7 @@ body {
     background-color: var(--bg-base);
     text-align: center;
     padding: 2rem;
+    padding-bottom: 80px; /* Leaves space for bottom-right title block */
     min-height: 100vh;
     margin: 0;
 
@@ -21,12 +22,13 @@ body {
     background-attachment: fixed;
 }
 
-/* Base Component Styling */
+/* Base Layout Container */
 .container {
     max-width: 800px;
     margin: 0 auto;
 }
 
+/* Control Panel Bar */
 .controls {
     margin: 20px 0;
     padding: 20px;
@@ -41,6 +43,7 @@ body {
     flex-wrap: wrap;
 }
 
+/* Action Buttons */
 button, input[type="file"]::file-selector-button {
     background: rgba(var(--accent-color), 0.85);
     color: #ffffff;
@@ -62,4 +65,65 @@ button:disabled {
     border-color: transparent;
     cursor: not-allowed;
     box-shadow: none;
+}
+
+/* CAD Drafting Block Signature (Fixed Bottom Right) */
+.cad-title-block {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    
+    display: inline-flex;
+    gap: 16px;
+    padding: 8px 14px;
+    
+    background: rgba(11, 15, 23, 0.9);
+    border: 1px solid rgba(var(--accent-color), 0.4);
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    
+    font-family: ui-monospace, SFMono-Regular, "Roboto Mono", Consolas, monospace;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+.cad-spec {
+    display: flex;
+    flex-direction: column;
+}
+
+.cad-label {
+    font-size: 0.6rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    font-weight: 700;
+}
+
+.cad-value {
+    font-size: 0.8rem;
+    color: rgb(var(--accent-color));
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* Mobile Responsiveness for Title Block */
+@media (max-width: 600px) {
+    .cad-title-block {
+        bottom: 12px;
+        right: 12px;
+        gap: 10px;
+        padding: 6px 10px;
+    }
+    
+    .cad-label {
+        font-size: 0.55rem;
+    }
+    
+    .cad-value {
+        font-size: 0.7rem;
+    }
 }
