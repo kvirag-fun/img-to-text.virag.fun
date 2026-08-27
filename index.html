@@ -63,6 +63,12 @@
 <body>
     <div class="container">
         <h1>Image to ASCII Generator</h1>
+
+        <div class="controls">
+            <input type="file" id="imageInput" accept="image/*">
+            <button id="copyBtn" disabled>📋 Copy Text</button> <!-- ADD THIS -->
+            <button id="downloadBtn" disabled>💾 Download .txt</button>
+        </div>
         
         <div class="controls">
             <input type="file" id="imageInput" accept="image/*">
@@ -75,6 +81,7 @@
     <script>
         const imageInput = document.getElementById('imageInput');
         const downloadBtn = document.getElementById('downloadBtn');
+        const copyBtn = document.getElementById('copyBtn');
         const preview = document.getElementById('preview');
         
         let currentAsciiText = '';
@@ -138,6 +145,7 @@
                     // Display the result and enable the download button
                     preview.textContent = currentAsciiText;
                     downloadBtn.disabled = false;
+                    copyBtn.disabled = false;
                 };
                 img.src = event.target.result;
             };
@@ -163,6 +171,16 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         });
+
+        copyBtn.addEventListener('click', () => {
+            if (!currentAsciiText) return;
+            
+            navigator.clipboard.writeText(currentAsciiText).then(() => {
+                copyBtn.textContent = '✅ Copied!';
+                setTimeout(() => { copyBtn.textContent = '📋 Copy Text'; }, 2000);
+            });
+        });
+        
     </script>
 </body>
 </html>
