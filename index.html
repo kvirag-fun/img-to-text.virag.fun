@@ -40,7 +40,8 @@
             align-items: center;
             flex-wrap: wrap;
         }
-        button, input[type="file"]::file-selector-button {
+        button, input[type="file"]::file-selector-button::before {
+            content: "📁 ";
             background: #4CAF50;
             color: white;
             border: none;
