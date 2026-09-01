@@ -1,6 +1,12 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Copy, Download, Check, ImageUp } from "lucide-react";
-import { imageToAscii, loadImage } from "./lib/ascii";
+import {
+  imageToAscii,
+  loadImage,
+  DEFAULT_OUTPUT_WIDTH,
+  MIN_OUTPUT_WIDTH,
+  MAX_OUTPUT_WIDTH,
+} from "./lib/ascii";
 
 function IconButton({
   icon: Icon,
@@ -22,18 +28,26 @@ function IconButton({
 }
 
 export default function App() {
+  const [image, setImage] = useState<HTMLImageElement | null>(null);
+  const [width, setWidth] = useState(DEFAULT_OUTPUT_WIDTH);
   const [ascii, setAscii] = useState("");
   const [fileName, setFileName] = useState("");
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Re-render the ASCII art whenever a new image loads or the width slider
+  // changes, so dragging the slider updates the preview without re-uploading.
+  useEffect(() => {
+    if (image) setAscii(imageToAscii(image, width));
+  }, [image, width]);
+
   const handleFile = useCallback(async (file: File | undefined) => {
     if (!file) return;
     setError("");
     try {
       const img = await loadImage(file);
-      setAscii(imageToAscii(img));
+      setImage(img);
       setFileName(file.name);
     } catch {
       setError("Couldn't read that image. Try a different file.");
@@ -112,6 +126,27 @@ export default function App() {
             </span>
           </label>
           {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
+
+          {image && (
+            <div className="mt-4 flex items-center gap-4 border-t border-border pt-4">
+              <label htmlFor="width" className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
+                Width
+              </label>
+              <input
+                id="width"
+                type="range"
+                min={MIN_OUTPUT_WIDTH}
+                max={MAX_OUTPUT_WIDTH}
+                step={10}
+                value={width}
+                onChange={(e) => setWidth(Number(e.target.value))}
+                className="h-1 flex-1 accent-primary"
+              />
+              <span className="w-24 shrink-0 text-right font-mono text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
+                {width} cols
+              </span>
+            </div>
+          )}
         </section>
 
         <section className="corner-ticks relative mt-6 overflow-x-auto bg-[#0b0f17] p-5">
