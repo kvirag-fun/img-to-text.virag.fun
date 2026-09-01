@@ -3,7 +3,7 @@ const ASCII_CHARS =
   "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ";
 
 export const DEFAULT_OUTPUT_WIDTH = 120;
-export const MIN_OUTPUT_WIDTH = 40;
+export const MIN_OUTPUT_WIDTH = 30;
 export const MAX_OUTPUT_WIDTH = 300;
 
 export function imageToAscii(img: HTMLImageElement, width: number = DEFAULT_OUTPUT_WIDTH): string {

@@ -142,8 +142,8 @@ export default function App() {
                 onChange={(e) => setWidth(Number(e.target.value))}
                 className="h-1 flex-1 accent-primary"
               />
-              <span className="w-24 shrink-0 text-right font-mono text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
-                {width} cols
+              <span className="w-28 shrink-0 text-right font-mono text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
+                {width} columns
               </span>
             </div>
           )}
