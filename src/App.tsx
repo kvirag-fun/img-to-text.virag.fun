@@ -128,7 +128,7 @@ export default function App() {
 
         <footer className="mt-20 border-t border-border pt-8">
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-            Krisztián Virág · Bratislava, Slovak Republic · {new Date().getFullYear()}
+            Krisztián Virág · Product Manager · Bratislava, Slovak Republic · {new Date().getFullYear()}
           </p>
         </footer>
       </main>
