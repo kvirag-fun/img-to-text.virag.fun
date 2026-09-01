@@ -6,6 +6,7 @@ import {
   DEFAULT_OUTPUT_WIDTH,
   MIN_OUTPUT_WIDTH,
   MAX_OUTPUT_WIDTH,
+  type BackgroundTarget,
 } from "./lib/ascii";
 
 function IconButton({
@@ -30,17 +31,19 @@ function IconButton({
 export default function App() {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [width, setWidth] = useState(DEFAULT_OUTPUT_WIDTH);
+  const [background, setBackground] = useState<BackgroundTarget>("light");
   const [ascii, setAscii] = useState("");
   const [fileName, setFileName] = useState("");
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Re-render the ASCII art whenever a new image loads or the width slider
-  // changes, so dragging the slider updates the preview without re-uploading.
+  // Re-render the ASCII art whenever a new image loads, the width slider
+  // changes, or the target background switches — the character mapping
+  // itself depends on which background the result will be viewed against.
   useEffect(() => {
-    if (image) setAscii(imageToAscii(image, width));
-  }, [image, width]);
+    if (image) setAscii(imageToAscii(image, width, background));
+  }, [image, width, background]);
 
   const handleFile = useCallback(async (file: File | undefined) => {
     if (!file) return;
@@ -147,10 +150,50 @@ export default function App() {
               </span>
             </div>
           )}
+
+          {image && (
+            <div className="mt-4 flex items-center gap-4 border-t border-border pt-4">
+              <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
+                Optimize for
+              </span>
+              <div className="flex border border-border">
+                <button
+                  type="button"
+                  onClick={() => setBackground("light")}
+                  className={`px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] transition-colors ${
+                    background === "light"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-card text-muted-foreground hover:text-primary"
+                  }`}
+                >
+                  Light mode
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBackground("dark")}
+                  className={`border-l border-border px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] transition-colors ${
+                    background === "dark"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-card text-muted-foreground hover:text-primary"
+                  }`}
+                >
+                  Dark mode
+                </button>
+              </div>
+            </div>
+          )}
         </section>
 
-        <section className="corner-ticks relative mt-6 overflow-x-auto bg-card p-5">
-          <pre className="font-mono text-[8px] leading-[8px] text-foreground">
+        <section
+          className={`corner-ticks relative mt-6 overflow-x-auto p-5 ${
+            background === "dark" ? "bg-[#0b0f17]" : "bg-card"
+          }`}
+        >
+          <pre
+            className={`font-mono text-[8px] leading-[8px] ${
+              background === "dark" ? "text-white" : "text-foreground"
+            }`}
+          >
             {ascii || "Upload an image to see the ASCII preview here..."}
           </pre>
         </section>

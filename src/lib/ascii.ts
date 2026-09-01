@@ -15,7 +15,13 @@ export const MAX_OUTPUT_WIDTH = 300;
 // output block's proportions matching the source image's.
 const CHAR_ASPECT_RATIO = 0.602;
 
-export function imageToAscii(img: HTMLImageElement, width: number = DEFAULT_OUTPUT_WIDTH): string {
+export type BackgroundTarget = "light" | "dark";
+
+export function imageToAscii(
+  img: HTMLImageElement,
+  width: number = DEFAULT_OUTPUT_WIDTH,
+  optimizeFor: BackgroundTarget = "light",
+): string {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("Canvas 2D context unavailable");
@@ -35,7 +41,13 @@ export function imageToAscii(img: HTMLImageElement, width: number = DEFAULT_OUTP
     const b = pixels[i + 2]!;
 
     const brightness = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-    const charIndex = Math.floor((brightness / 255) * (ASCII_CHARS.length - 1));
+    // Dense characters carry more visible ink than sparse ones, so which
+    // brightness they should represent depends on what color that ink
+    // will be against. On a light background (dark ink), dense = dark
+    // pixel. On a dark background (light ink), dense = light pixel —
+    // the exact opposite — so the mapping flips there.
+    const normalized = optimizeFor === "dark" ? (255 - brightness) / 255 : brightness / 255;
+    const charIndex = Math.floor(normalized * (ASCII_CHARS.length - 1));
     ascii += ASCII_CHARS[charIndex];
 
     if ((i / 4 + 1) % width === 0) {
