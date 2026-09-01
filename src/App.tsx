@@ -77,7 +77,7 @@ export default function App() {
 
       <header className="blueprint-topbar">
         <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
-          Image → ASCII
+          Krisztián Virág
         </span>
       </header>
 
