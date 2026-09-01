@@ -143,7 +143,7 @@ export default function App() {
                 step={10}
                 value={width}
                 onChange={(e) => setWidth(Number(e.target.value))}
-                className="h-1 flex-1 accent-primary"
+                className="h-1 flex-1"
               />
               <span className="w-28 shrink-0 text-right font-mono text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
                 {width} columns
