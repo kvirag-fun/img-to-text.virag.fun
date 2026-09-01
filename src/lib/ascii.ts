@@ -1,6 +1,12 @@
-// Darkest to lightest characters.
-const ASCII_CHARS =
-  "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ";
+// Darkest to lightest characters, per style.
+const CHARACTER_SETS = {
+  // Traditional ASCII ramp, ordered by approximate ink coverage.
+  classic: "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ",
+  // Unicode block elements — fewer, bolder steps, near-universal monospace support.
+  blocks: "█▓▒░ ",
+} as const;
+
+export type CharacterSet = keyof typeof CHARACTER_SETS;
 
 export const DEFAULT_OUTPUT_WIDTH = 120;
 export const MIN_OUTPUT_WIDTH = 30;
@@ -21,7 +27,9 @@ export function imageToAscii(
   img: HTMLImageElement,
   width: number = DEFAULT_OUTPUT_WIDTH,
   optimizeFor: BackgroundTarget = "light",
+  charset: CharacterSet = "classic",
 ): string {
+  const chars = CHARACTER_SETS[charset];
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("Canvas 2D context unavailable");
@@ -47,8 +55,8 @@ export function imageToAscii(
     // pixel. On a dark background (light ink), dense = light pixel —
     // the exact opposite — so the mapping flips there.
     const normalized = optimizeFor === "dark" ? (255 - brightness) / 255 : brightness / 255;
-    const charIndex = Math.floor(normalized * (ASCII_CHARS.length - 1));
-    ascii += ASCII_CHARS[charIndex];
+    const charIndex = Math.floor(normalized * (chars.length - 1));
+    ascii += chars[charIndex];
 
     if ((i / 4 + 1) % width === 0) {
       ascii += "\n";

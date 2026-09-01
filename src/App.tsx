@@ -7,6 +7,7 @@ import {
   MIN_OUTPUT_WIDTH,
   MAX_OUTPUT_WIDTH,
   type BackgroundTarget,
+  type CharacterSet,
 } from "./lib/ascii";
 
 function IconButton({
@@ -32,6 +33,7 @@ export default function App() {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [width, setWidth] = useState(DEFAULT_OUTPUT_WIDTH);
   const [background, setBackground] = useState<BackgroundTarget>("light");
+  const [charset, setCharset] = useState<CharacterSet>("classic");
   const [ascii, setAscii] = useState("");
   const [fileName, setFileName] = useState("");
   const [copied, setCopied] = useState(false);
@@ -39,11 +41,10 @@ export default function App() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Re-render the ASCII art whenever a new image loads, the width slider
-  // changes, or the target background switches — the character mapping
-  // itself depends on which background the result will be viewed against.
+  // changes, the target background switches, or the character set changes.
   useEffect(() => {
-    if (image) setAscii(imageToAscii(image, width, background));
-  }, [image, width, background]);
+    if (image) setAscii(imageToAscii(image, width, background, charset));
+  }, [image, width, background, charset]);
 
   const handleFile = useCallback(async (file: File | undefined) => {
     if (!file) return;
@@ -178,6 +179,38 @@ export default function App() {
                   }`}
                 >
                   Dark mode
+                </button>
+              </div>
+            </div>
+          )}
+
+          {image && (
+            <div className="mt-4 flex items-center gap-4 border-t border-border pt-4">
+              <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
+                Style
+              </span>
+              <div className="flex border border-border">
+                <button
+                  type="button"
+                  onClick={() => setCharset("classic")}
+                  className={`px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] transition-colors ${
+                    charset === "classic"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-card text-muted-foreground hover:text-primary"
+                  }`}
+                >
+                  Classic
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCharset("blocks")}
+                  className={`border-l border-border px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] transition-colors ${
+                    charset === "blocks"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-card text-muted-foreground hover:text-primary"
+                  }`}
+                >
+                  Blocks
                 </button>
               </div>
             </div>
