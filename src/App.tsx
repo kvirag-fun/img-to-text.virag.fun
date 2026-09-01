@@ -149,8 +149,8 @@ export default function App() {
           )}
         </section>
 
-        <section className="corner-ticks relative mt-6 overflow-x-auto bg-[#0b0f17] p-5">
-          <pre className="font-mono text-[8px] leading-[8px] text-white">
+        <section className="corner-ticks relative mt-6 overflow-x-auto bg-card p-5">
+          <pre className="font-mono text-[8px] leading-[8px] text-foreground">
             {ascii || "Upload an image to see the ASCII preview here..."}
           </pre>
         </section>
