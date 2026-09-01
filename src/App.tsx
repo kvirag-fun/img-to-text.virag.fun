@@ -56,7 +56,11 @@ export default function App() {
   const handleCopy = useCallback(async () => {
     if (!ascii) return;
     const escaped = ascii.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    const html = `<pre><code>${escaped}</code></pre>`;
+    // Apps that read the rich clipboard entry (Word, Teams, most comment
+    // fields) ignore <pre>'s implicit monospace default — they only honor
+    // inline styles. Consolas/Courier New cover Windows+Office, Menlo/Monaco
+    // cover Mac, so the font stays monospace wherever this gets pasted.
+    const html = `<pre style="margin:0;font-family:Consolas,'Courier New',Menlo,Monaco,'Liberation Mono',monospace;font-size:10px;line-height:10px;white-space:pre;"><code style="font-family:inherit;white-space:inherit;">${escaped}</code></pre>`;
     try {
       await navigator.clipboard.write([
         new ClipboardItem({
