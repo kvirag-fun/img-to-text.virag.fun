@@ -2,14 +2,15 @@
 const ASCII_CHARS =
   "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ";
 
-const OUTPUT_WIDTH = 120;
+export const DEFAULT_OUTPUT_WIDTH = 120;
+export const MIN_OUTPUT_WIDTH = 40;
+export const MAX_OUTPUT_WIDTH = 300;
 
-export function imageToAscii(img: HTMLImageElement): string {
+export function imageToAscii(img: HTMLImageElement, width: number = DEFAULT_OUTPUT_WIDTH): string {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("Canvas 2D context unavailable");
 
-  const width = OUTPUT_WIDTH;
   // Characters are roughly twice as tall as they are wide, so compensate
   // when deriving the output height from the image's aspect ratio.
   const height = Math.floor((img.height / img.width) * width * 0.5);
