@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@import "../vendor/blueprint-framework/blueprint.css";
+
+/*
+ * The shared visual identity (paper background, blueprint grid, markup
+ * accent, corner-ticks, leader-line, fonts) lives in
+ * vendor/blueprint-framework (a git submodule — see that repo's README),
+ * reused across virag.fun sites.
+ */
+
+@theme inline {
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-blueprint: var(--blueprint);
+  --color-blueprint-soft: var(--blueprint-soft);
+  --color-markup: var(--markup);
+  --color-markup-soft: var(--markup-soft);
+  --color-grid-line: var(--grid-line);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--markup-soft);
+  color: var(--foreground);
+}
