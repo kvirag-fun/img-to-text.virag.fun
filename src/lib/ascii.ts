@@ -6,14 +6,21 @@ export const DEFAULT_OUTPUT_WIDTH = 120;
 export const MIN_OUTPUT_WIDTH = 30;
 export const MAX_OUTPUT_WIDTH = 300;
 
+// IBM Plex Mono's measured glyph advance width, as a fraction of its
+// font-size (verified via canvas measureText at font-size 200px: every
+// glyph in a monospace font shares one advance width, and IBM Plex Mono's
+// is 0.602 * font-size). Both the preview and the copied HTML render at
+// line-height == font-size, so a character cell's on-screen aspect ratio
+// is 1 : CHAR_ASPECT_RATIO (height : width) — used below to keep the
+// output block's proportions matching the source image's.
+const CHAR_ASPECT_RATIO = 0.602;
+
 export function imageToAscii(img: HTMLImageElement, width: number = DEFAULT_OUTPUT_WIDTH): string {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("Canvas 2D context unavailable");
 
-  // Characters are roughly twice as tall as they are wide, so compensate
-  // when deriving the output height from the image's aspect ratio.
-  const height = Math.floor((img.height / img.width) * width * 0.5);
+  const height = Math.floor((img.height / img.width) * width * CHAR_ASPECT_RATIO);
 
   canvas.width = width;
   canvas.height = height;
