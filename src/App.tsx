@@ -77,7 +77,7 @@ export default function App() {
 
       <header className="blueprint-topbar">
         <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
-          Krisztián Virág
+          Ing. Krisztián Virág
         </span>
       </header>
 
@@ -128,7 +128,7 @@ export default function App() {
 
         <footer className="mt-20 border-t border-border pt-8">
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-            Krisztián Virág · Product Manager · Bratislava, Slovak Republic · {new Date().getFullYear()}
+            Ing. Krisztián Virág · Product Manager · Bratislava, Slovak Republic · {new Date().getFullYear()}
           </p>
         </footer>
       </main>
