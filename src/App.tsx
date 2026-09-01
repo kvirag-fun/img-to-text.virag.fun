@@ -3,6 +3,7 @@ import { Copy, Download, Check, ImageUp } from "lucide-react";
 import {
   imageToAscii,
   loadImage,
+  emojiToImage,
   DEFAULT_OUTPUT_WIDTH,
   MIN_OUTPUT_WIDTH,
   MAX_OUTPUT_WIDTH,
@@ -36,6 +37,7 @@ export default function App() {
   const [charset, setCharset] = useState<CharacterSet>("classic");
   const [ascii, setAscii] = useState("");
   const [fileName, setFileName] = useState("");
+  const [emojiInput, setEmojiInput] = useState("");
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -57,6 +59,19 @@ export default function App() {
       setError("Couldn't read that image. Try a different file.");
     }
   }, []);
+
+  const handleEmoji = useCallback(async () => {
+    const emoji = emojiInput.trim();
+    if (!emoji) return;
+    setError("");
+    try {
+      const img = await emojiToImage(emoji);
+      setImage(img);
+      setFileName(emoji);
+    } catch {
+      setError("Couldn't render that emoji. Try a different one.");
+    }
+  }, [emojiInput]);
 
   const handleDownload = useCallback(() => {
     if (!ascii) return;
@@ -129,6 +144,23 @@ export default function App() {
               {fileName || "No file selected"}
             </span>
           </label>
+
+          <div className="mt-4 flex items-center gap-2 border-t border-border pt-4">
+            <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
+              Or use an emoji
+            </span>
+            <input
+              type="text"
+              value={emojiInput}
+              onChange={(e) => setEmojiInput(e.target.value)}
+              placeholder="🐶"
+              maxLength={8}
+              className="w-16 border border-border bg-card px-2 py-1 text-center text-lg"
+            />
+            <button type="button" className="blueprint-button" onClick={handleEmoji}>
+              Convert
+            </button>
+          </div>
           {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
 
           {image && (

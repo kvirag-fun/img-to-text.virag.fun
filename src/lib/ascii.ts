@@ -66,6 +66,34 @@ export function imageToAscii(
   return ascii;
 }
 
+// Renders an emoji onto an opaque white canvas so it can be fed through the
+// same imageToAscii pipeline as an uploaded photo. White (rather than
+// transparent) backing matters: getImageData ignores alpha, so a transparent
+// area outside the glyph would otherwise sample as black (0,0,0) and read as
+// the densest possible character instead of empty space.
+export function emojiToImage(emoji: string): Promise<HTMLImageElement> {
+  const size = 512;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Canvas 2D context unavailable");
+
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, size, size);
+  ctx.font = `${size * 0.75}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(emoji, size / 2, size / 2 + size * 0.05);
+
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onerror = () => reject(new Error("Failed to render emoji"));
+    img.onload = () => resolve(img);
+    img.src = canvas.toDataURL();
+  });
+}
+
 export function loadImage(file: File): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
