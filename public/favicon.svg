@@ -4,5 +4,5 @@
     <path d="M4,13 V4 H13"/>
     <path d="M19,28 H28 V19"/>
   </g>
-  <text x="16" y="23" text-anchor="middle" font-family="'IBM Plex Mono',ui-monospace,monospace" font-weight="700" font-size="19" fill="#233248">#</text>
+  <text x="16" y="24" text-anchor="middle" font-family="'IBM Plex Mono',ui-monospace,monospace" font-weight="700" font-size="23" fill="#233248">#</text>
 </svg>
